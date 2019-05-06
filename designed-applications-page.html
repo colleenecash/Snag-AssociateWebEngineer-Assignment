@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap - Prebuilt Layout</title>
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap-4.3.1.css" rel="stylesheet">
+
+	  
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<script>
+
+    $(function() {
+
+
+   var people = [];
+
+   $.getJSON('applications-2.json', function(data) {
+	   var tbl = $("<tbody />")
+	   $("#userdata").append(tbl)
+       $.each(data.person, function(i, f) {
+          tbl.append("<tr style=\"text-align: left\">" + "<td>" + f.name + "</td>" +
+           "<td>" + f.applied + "</td>" + "<td>" + f.position + "</td>" + "<td>" + f.experience + " Years" + "</td>" + "<td>" + "<input style=\"text-align: center;\" type=\"checkbox\"></input></td>" + "</tr>")
+     });
+
+   });
+
+});
+</script>
+<script>
+	  $(function () {
+		  var people = [];
+		  
+		  $.getJSON('applications-2.json', function(data) {
+					var div = $("<p />")
+		  $("#userdata2").append(div)
+			  $.each(data.person, function(i, f){
+				  div.append(f.name + "<br>" + "Q: " + f.question.text + "<br>" + " A: " + f.question.answer + "<br><br>" + "Availability" + "<br>" + "SUNDAY: " + f.availability.Su + "<br>" + "MONDAY: " + f.availability.M + "<br>" + "TUESDAY: " + f.availability.T + "<br>" + "WEDNESDAY: " + f.availability.W + "<br>" + "THURSDAY: " + f.availability.Th + "<br>" + "FRIDAY: " + f.availability.F + "<br>" + "SATURDAY: " + f.availability.S + "<br><hr><br>" )
+			  });
+					});
+	  });
+	  </script>
+	
+<!--On Page Styling-->
+	<style>
+		table {
+		margin-top: 15px;
+			margin-botom: 15px;
+		}
+		td {
+	text-align: center;
+	font-size: 15px;
+	border-bottom: thin solid #000000;
+		}
+		th {
+			text-align: center !important;
+	font-weight: bold;
+	font-size: 15px;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	height: 40px;
+	width: 200px;
+		}
+thead tr #bookmark-column {
+	width: 110px;
+}
+		thead {
+			border-bottom: solid black 2px;
+		}
+		td {
+			margin-right: 25px;
+			padding-top: 10px;
+		}
+	
+		.light-table-filter {
+			margin-left: 20px;
+			margin-top: 20px;
+			
+		}
+		.col-sm-3 {
+			text-align: center;
+			vertical-align: middle;
+		}
+
+
+	</style>
+  </head>
+  <body>
+<div class="container">
+<div class="profile">	
+	<!--Filter Text Box-->
+			<input class="form-control" id="myInput" type="text" placeholder="Filter Through Applicants Here...">
+	<!--END FILTER TEXT BOX-->
+	
+   <table id="userdata" class="application-entries" style="border: solid 1px black; width: 0px;" align="center">
+	   <thead>
+		   <tr>
+        <th onclick="sortTable(0)">Name <span class="glyphicon glyphicon-chevron-down" style="font-size: 10px"></span></th>
+        <th onclick="sortTable(1)">Application Date  <span class="glyphicon glyphicon-chevron-down" style="font-size: 10px"></span></th>
+        <th onclick="sortTable(2)">Position <span class="glyphicon glyphicon-chevron-down" style="font-size: 10px"></span></th>
+		<th onclick="sortTable(3)">Experience <span class="glyphicon glyphicon-chevron-down" style="font-size: 10px"></span></th>
+	 	<th id="bookmark-column"></th>
+		   </tr>
+	   </thead>
+	   <tbody>
+	   </tbody>
+  </table>
+	
+
+	
+	<div class="more-details offset-xl-1 col-xl-10" id="moredetails">
+	<div style="margin-top: 30px;" class="container" id="userdata2">
+		<h4>Applicant Interview Answers and Availability</h4>
+</div>
+	
+	</div>
+	<!--===================start popover information===============-->
+	
+	
+	
+	<!--=============end popoverinformation-->
+	
+	<!--======================START FILTERING SCRIPT================================
+This filter will return Applicant Rows that meet the filter -- The data that is filtered is everything in the tbody (all of the text) 
+-->
+<script>
+	$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("tbody tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+	</script>
+	<!--==========================END FILTERING SCRIPT===================-->
+	<!--===================START SCRIPT FOR SORTING NAME AND APPLICATION DATE===================
+
+This sorting function only applies to the Applicants Name and the Application Date -- This will sort from A-Z or Z-A for Name and will sort Application Date  by clicking the Table Header "Name" and "Application Date" 
+
+-->
+  <script>
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("userdata");
+  switching = true;
+  dir = "asc"; 
+  
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+  
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+   
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          shouldSwitch= true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount ++;      
+    } else {
+     
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
+	<!--===================END SCRIPT FOR SORTING NAME AND APPLICATION DATE===================-->
+	
+    </div>
+	  </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) --> 
+    <script src="/js/jquery-3.3.1.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed --> 
+  <script src="/js/bootstrap-4.3.1.js"></script>
+  </body>
+</html>
