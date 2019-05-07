@@ -18,7 +18,7 @@ I decided to use a checkbox that indicates a bookmarked listing, since the check
 
 I initially wanted to have a collapsible feature that would display the applicant’s availability and answers to the questions provided, once a “see more” button/link was clicked, but I kept running into the same problem of the JavaScript string breaking and the wrong data iterating. See below for more information. I resorted to creating another table below the application listing table, that way the data is still accessible.
 
-I keep getting “undefined” as an output when trying to call the questions along with the answers from the .json file.
+~~I keep getting “undefined” as an output when trying to call the questions along with the answers from the .json file.~~ Corrected the problem by removing the extra brackets located in the JSON file around the question and answer data.
 
 In the availability section, initially I wanted to display the number output, 0, 1 and 2 as “Not Available” for 0, “AM” for 1 and “PM” for 2 but was unsuccessful. 
 
